@@ -13,7 +13,6 @@ import authRouter from './routes/auth.router'
 import { errorHandler, mongoErrorHandler } from './middleware/errorHandlerMiddleware'
 
 const app = express()
-
 app.use(compression())
 app.use(cookieParser())
 app.use(express.json())

@@ -3,6 +3,22 @@ import User, { IUser } from '../models/user'
 import mongoose from 'mongoose'
 import { Movie } from '../models/movie'
 
+export const searchMovies = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { name, title } = req.query;
+
+    let query: any = {};
+
+    if (title || name) {
+      query.title = { $regex: new RegExp((title || name) as string, 'i') }; // Tìm theo tiêu đề (không phân biệt hoa thường)
+    }
+    const movies = await Movie.find(query).populate('cast').populate('categories');
+    res.status(200).json(movies);
+  } catch (error) {
+    next(error)
+  }
+};
+
 export const addToWatchList = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { userId, movieId } = req.body

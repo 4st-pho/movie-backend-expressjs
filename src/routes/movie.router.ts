@@ -8,12 +8,14 @@ import {
   deleteMovie,
   getWatchListMovies,
   addToWatchList,
-  removeFromWatchList
+  removeFromWatchList,
+  searchMovies
 } from '../controllers/movie.controller'
 
 const router = express.Router()
 
 router.get('/', getMovies)
+router.get('/search', searchMovies)
 router.get('/:id', getMovieById)
 router.post('/', createMovie)
 router.patch('/:id', updateMovie)
