@@ -17,7 +17,7 @@ export const mongoErrorHandler = (error: MongoError, req: Request, res: Response
     });
     return res.status(400).json({message: error.message, errors});
   }
-  return res.status(400).json(error);
+  return res.status(400).json({error, message: error.message});
 };
 
 export const errorHandler = (error: Error, req: Request, res: Response, next: NextFunction) => {
