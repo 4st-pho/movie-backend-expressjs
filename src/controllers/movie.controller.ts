@@ -5,14 +5,21 @@ import { Movie } from '../models/movie'
 
 export const searchMovies = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { name, title } = req.query;
-
+    const { name, title, page, pageSize } = req.query;
     let query: any = {};
-
     if (title || name) {
-      query.title = { $regex: new RegExp((title || name) as string, 'i') }; // Tìm theo tiêu đề (không phân biệt hoa thường)
+      query.title = { $regex: new RegExp((title || name) as string, 'i') };
     }
-    const movies = await Movie.find(query).populate('cast').populate('categories');
+
+    const currentPage = parseInt(page as string) || 1;
+    const itemsPerPage = parseInt(pageSize as string) || 10;
+    const skip = (currentPage - 1) * itemsPerPage;
+
+    const movies = await Movie.find(query)
+      .skip(skip)
+      .limit(itemsPerPage)
+      .populate('cast').populate('categories');;
+      
     res.status(200).json(movies);
   } catch (error) {
     next(error)
