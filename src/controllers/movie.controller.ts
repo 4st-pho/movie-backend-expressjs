@@ -83,12 +83,17 @@ export const getWatchListMovies = async (req: Request, res: Response, next: Next
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(404).json({ message: 'User not found' })
     }
-    const user = await User.findById(userId).populate('watchList')
+    const user = await User.findById(userId).populate({
+      path: 'watchList',
+      populate: {
+        path: 'cast categories',
+      },
+    })
     if (!user) {
       return res.status(404).json({ message: 'User not found' })
     }
 
-    res.status(200).json({ watchList: user.watchList ?? [] })
+    res.status(200).json(user.watchList)
   } catch (error) {
     next(error)
   }
