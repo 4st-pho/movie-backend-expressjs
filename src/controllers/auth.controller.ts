@@ -26,12 +26,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     if (!password || !email) {
       return res.status(400).json({ message: 'Bad request' })
     }
-    const user = await User.findOne({ email }).populate({
-      path: 'watchList',
-      populate: {
-        path: 'cast categories',
-      },
-    })
+    const user = await User.findOne({ email })
     if (!user) {
       return res.status(401).json({ message: 'Invalid username or password' })
     }
