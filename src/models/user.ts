@@ -16,7 +16,7 @@ const userSchema = new Schema({
     required: [true, 'email is required'],
     unique: true,
     index: true,
-    match: [/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'Please enter a valid email'],
+    match: [/^(([^<>()[\]\\.,:\s@\"]+(\.[^<>()[\]\\.,:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'Please enter a valid email'],
   },
   avatar: { type: String, default: 'https://www.stats.lk/Images/default-avatar.jpg' },
   watchList: [{ type: Schema.Types.ObjectId, ref: 'Movie', default: [] }],

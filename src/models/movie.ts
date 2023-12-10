@@ -4,7 +4,6 @@ import { ICategory } from './category.js'
 
 export interface IMovie extends Document {
   title: string
-  name: string
   imageUrl: string
   rating: string
   categories: ICategory[]
@@ -18,7 +17,6 @@ export interface IMovie extends Document {
 
 const movieSchema = new Schema<IMovie>({
   title: { type: String, required: [true, 'title is required'], },
-  name: { type: String, required: [true, 'name is required'] },
   imageUrl: { type: String, required: [true, 'imageUrl is required'] },
   rating: { type: String, required: [true, 'rating is required'] },
   duration: { type: String, required: [true, 'duration is required'] },

@@ -5,26 +5,26 @@ import { Movie } from '../models/movie'
 
 export const searchMovies = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { name, title, page, pageSize } = req.query;
-    let query: any = {};
-    if (title || name) {
-      query.title = { $regex: new RegExp((title || name) as string, 'i') };
+    const { title, page, pageSize } = req.query
+    let query: any = {}
+    if (title) {
+      query.title = { $regex: new RegExp((title) as string, 'i') }
     }
 
-    const currentPage = parseInt(page as string) || 1;
-    const itemsPerPage = parseInt(pageSize as string) || 10;
-    const skip = (currentPage - 1) * itemsPerPage;
+    const currentPage = parseInt(page as string) || 1
+    const itemsPerPage = parseInt(pageSize as string) || 10
+    const skip = (currentPage - 1) * itemsPerPage
 
     const movies = await Movie.find(query)
       .skip(skip)
       .limit(itemsPerPage)
-      .populate('cast').populate('categories');;
-      
-    res.status(200).json(movies);
+      .populate('cast').populate('categories')
+
+    res.status(200).json(movies)
   } catch (error) {
     next(error)
   }
-};
+}
 
 export const addToWatchList = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -97,13 +97,13 @@ export const getWatchListMovies = async (req: Request, res: Response, next: Next
 
 export const getMovies = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const page = parseInt(req.query.page as string) || 1;
-    const pageSize = parseInt(req.query.pageSize as string) || 10;
+    const page = parseInt(req.query.page as string) || 1
+    const pageSize = parseInt(req.query.pageSize as string) || 10
     let movies = await Movie.find()
       .skip((page - 1) * pageSize)
       .limit(pageSize)
       .populate('cast')
-      .populate('categories');
+      .populate('categories')
     return res.status(200).json(movies)
   } catch (error) {
     next(error)

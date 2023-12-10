@@ -7,13 +7,13 @@ import { PopularMovie } from '../models/movie'
 
 export const getMovies = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const page = parseInt(req.query.page as string) || 1;
-    const pageSize = parseInt(req.query.pageSize as string) || 10;
+    const page = parseInt(req.query.page as string) || 1
+    const pageSize = parseInt(req.query.pageSize as string) || 10
     let movies = await PopularMovie.find()
       .skip((page - 1) * pageSize)
       .limit(pageSize)
       .populate('cast')
-      .populate('categories');
+      .populate('categories')
     return res.status(200).json(movies)
   } catch (error) {
     next(error)
