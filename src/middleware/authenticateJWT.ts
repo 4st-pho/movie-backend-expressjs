@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
+import { Request, Response, NextFunction } from 'express'
 import config from '../config/config'
 
 export const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
@@ -11,8 +11,11 @@ export const authenticateJWT = (req: Request, res: Response, next: NextFunction)
 
   jwt.verify(token, config.secretKey, (err, user) => {
     if (err) {
-
-      return res.status(403).json({ message: 'Forbidden' , err})
+      if (err.name === 'TokenExpiredError') {
+        return res.status(401).json({ message: 'Token has expired' });
+      } else {
+        return res.status(401).json({ message: 'Invalid token' });
+      }
     }
     next()
   })
