@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express'
-import User, { IUser } from '../models/user'
 import mongoose from 'mongoose'
 import { Movie } from '../models/movie'
 
@@ -21,79 +20,6 @@ export const searchMovies = async (req: Request, res: Response, next: NextFuncti
       .populate('cast').populate('categories')
 
     res.status(200).json(movies)
-  } catch (error) {
-    next(error)
-  }
-}
-
-export const addToWatchList = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { userId, movieId } = req.body
-
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(404).json({ message: 'User not found' })
-    }
-    if (!mongoose.Types.ObjectId.isValid(movieId)) {
-      return res.status(404).json({ message: 'Movie not found' })
-    }
-    const user = await User.findById(userId)
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' })
-    }
-
-    if (user.watchList.includes(movieId)) {
-      return res.status(400).json({ message: 'Movie already in watchlist' })
-    }
-
-    user.watchList.push(movieId)
-    await user.save()
-
-    res.status(200).json({ message: 'Movie added to watchlist' })
-  } catch (error) {
-    next(error)
-  }
-}
-
-export const removeFromWatchList = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { userId, movieId } = req.body
-
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(404).json({ message: 'User not found' })
-    }
-    if (!mongoose.Types.ObjectId.isValid(movieId)) {
-      return res.status(404).json({ message: 'Movie not found' })
-    }
-    const user = await User.findById(userId)
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' })
-    }
-    user.watchList = user.watchList.filter((id) => id != movieId)
-    await user.save()
-
-    res.status(200).json({ message: 'Movie removed from watchlist' })
-  } catch (error) {
-    next(error)
-  }
-}
-
-export const getWatchListMovies = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { userId } = req.params
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(404).json({ message: 'User not found' })
-    }
-    const user = await User.findById(userId).populate({
-      path: 'watchList',
-      populate: {
-        path: 'cast categories',
-      },
-    })
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' })
-    }
-
-    res.status(200).json(user.watchList)
   } catch (error) {
     next(error)
   }
