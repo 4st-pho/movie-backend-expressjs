@@ -29,4 +29,3 @@ const movieSchema = new Schema<IMovie>({
 })
 
 export const Movie = model<IMovie>('Movie', movieSchema)
-export const PopularMovie = model<IMovie>('PopularMovie', movieSchema)

@@ -28,13 +28,13 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     }
     const user = await User.findOne({ email })
     if (!user) {
-      return res.status(401).json({ message: 'Invalid username or password' })
+      return res.status(400).json({ message: 'Invalid username or password' })
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password)
 
     if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Invalid username or password' })
+      return res.status(400).json({ message: 'Invalid username or password' })
     }
     const token = jwt.sign({ username: user.username }, config.secretKey ?? "", { expiresIn: '1m' })
     user.password = ""

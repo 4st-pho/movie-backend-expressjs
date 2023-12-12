@@ -1,18 +1,20 @@
 import express from 'express'
 import {
-  getMovies,
-  getMovieById,
-  createMovie,
-  updateMovie,
-  deleteMovie,
+  addMovieToPopular,
+  removeMovieFromPopular,
+  getPopularMovies,
+  createPopularMovie,
+  updatePopularMovie,
+  deletePopularMovie,
 } from '../controllers/pupularMovie.controller'
 
 const router = express.Router()
 
-router.get('/', getMovies)
-router.get('/:id', getMovieById)
-router.post('/', createMovie)
-router.patch('/:id', updateMovie)
-router.delete('/:id', deleteMovie)
+router.get('/', getPopularMovies)
+router.post('/add-movie', addMovieToPopular)
+router.post('/remove-movie', removeMovieFromPopular)
+router.post('/', createPopularMovie)
+router.put('/', updatePopularMovie)
+router.delete('/', deletePopularMovie)
 
 export default router
