@@ -12,7 +12,7 @@ export const getPopularMovies = async (req: Request, res: Response, next: NextFu
     const page = parseInt(req.query.page as string) || 1
     const pageSize = parseInt(req.query.pageSize as string) || 10
     const popularMovie = await PopularMovie.findOne().populate({
-      path: 'movies',
+      path: 'movieIds',
       populate: {
         path: 'cast categories',
       },
