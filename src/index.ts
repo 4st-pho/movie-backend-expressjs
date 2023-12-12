@@ -23,7 +23,7 @@ app.use(cors())
 app.use('/api/actors', actorRouter)
 app.use('/api/categories', categoryRouter)
 app.use('/api/movies', movieRouter)
-app.use('/popular-movies', popularMovieRouter)
+app.use('/api/popular-movies', popularMovieRouter)
 app.use('/api/users', userRouter)
 app.use('/api/auth', authRouter)
 
