@@ -8,9 +8,11 @@ import userRouter from './routes/user.router'
 import movieRouter from './routes/movie.router'
 import popularMovieRouter from './routes/popularMovie.router'
 import actorRouter from './routes/actor.router'
+import uploadRouter from './routes/upload.router'
 import categoryRouter from './routes/category.router'
 import authRouter from './routes/auth.router'
 import { errorHandler, mongoErrorHandler } from './middleware/errorHandlerMiddleware'
+
 
 const app = express()
 app.use(compression())
@@ -19,13 +21,14 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
-// use routes
+// Use routes
 app.use('/api/actors', actorRouter)
 app.use('/api/categories', categoryRouter)
 app.use('/api/movies', movieRouter)
 app.use('/api/popular-movies', popularMovieRouter)
 app.use('/api/users', userRouter)
 app.use('/api/auth', authRouter)
+app.use('/api/upload', uploadRouter)
 
 // Error handling middleware
 app.use(mongoErrorHandler)

@@ -7,6 +7,7 @@ export interface IUser extends Document {
   email: string
   avatar: string
   watchList: IMovie[]
+  birthdate: Date | null
 }
 const userSchema = new Schema({
   username: { type: String, required: [true, 'username is required'] },
@@ -20,6 +21,7 @@ const userSchema = new Schema({
   },
   avatar: { type: String, default: 'https://www.stats.lk/Images/default-avatar.jpg' },
   watchList: [{ type: Schema.Types.ObjectId, ref: 'Movie', default: [] }],
+  birthdate: { type: Date, default: null }
 })
 
 userSchema.clearIndexes()
