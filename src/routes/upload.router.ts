@@ -1,6 +1,5 @@
-import multer from 'multer';
 import express from 'express'
-import { upload } from '../config/uploadConfig';
+import { upload } from '../config/uploadConfig'
 
 import {
     uploadImage

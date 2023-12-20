@@ -1,5 +1,5 @@
-import * as dotenv from 'dotenv';
-dotenv.config();
+import * as dotenv from 'dotenv' 
+dotenv.config() 
 export default {
     mongoUrl: process.env.MONGO_URL || "",
     secretKey: process.env.JWT_SECRET_KEY || "",

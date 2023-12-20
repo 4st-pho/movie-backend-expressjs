@@ -9,6 +9,7 @@ import movieRouter from './routes/movie.router'
 import popularMovieRouter from './routes/popularMovie.router'
 import actorRouter from './routes/actor.router'
 import uploadRouter from './routes/upload.router'
+import commentRouter from './routes/comment.router'
 import categoryRouter from './routes/category.router'
 import authRouter from './routes/auth.router'
 import { errorHandler, mongoErrorHandler } from './middleware/errorHandlerMiddleware'
@@ -28,6 +29,7 @@ app.use('/api/movies', movieRouter)
 app.use('/api/popular-movies', popularMovieRouter)
 app.use('/api/users', userRouter)
 app.use('/api/auth', authRouter)
+app.use('/api/comments', commentRouter)
 app.use('/api/upload', uploadRouter)
 
 // Error handling middleware

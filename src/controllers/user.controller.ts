@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import User from '../models/user'
 import mongoose from 'mongoose'
 import { cloudinary } from '../config/uploadConfig'
-import { images } from '../utils/storagePath';
+import { images } from '../utils/storagePath'
 
 export const getUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
@@ -46,16 +46,16 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
         if (error) {
           return res
             .status(500)
-            .json({ message: 'Upload to Cloudinary failed', error });
+            .json({ message: 'Upload to Cloudinary failed', error })
         }
         if (!result) {
-          return res.status(500).json({ message: 'Upload result is undefined' });
+          return res.status(500).json({ message: 'Upload result is undefined' })
         }
         req.body.avatar = result.url
         return updateUserWithoutImage(req, res, next)
       }
 
-    ).end(req.file.buffer);
+    ).end(req.file.buffer)
   } catch (error) {
     next(error)
   }
@@ -69,7 +69,7 @@ const updateUserWithoutImage = async (req: Request, res: Response, next: NextFun
     }
     if (req.body.birthdate) {
       var pattern = /(\d{2})\/(\d{2})\/(\d{4})/
-      const dateObject = new Date(req.body.birthdate.replace(pattern, '$3-$2-$1'));
+      const dateObject = new Date(req.body.birthdate.replace(pattern, '$3-$2-$1'))
       req.body.birthdate = dateObject
     }
     const updatedUser = await User.findByIdAndUpdate(
