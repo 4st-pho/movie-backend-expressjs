@@ -15,6 +15,7 @@ export const getCommentsByMovieId = async (req: Request, res: Response, next: Ne
 
     const comments = await Comment.find({ movieId })
       .populate('userId')
+      .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
 
