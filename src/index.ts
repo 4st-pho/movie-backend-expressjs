@@ -12,6 +12,7 @@ import uploadRouter from './routes/upload.router'
 import commentRouter from './routes/comment.router'
 import categoryRouter from './routes/category.router'
 import authRouter from './routes/auth.router'
+import staticRouter from './routes/static.router'
 import { errorHandler, mongoErrorHandler } from './middleware/errorHandlerMiddleware'
 
 
@@ -31,6 +32,7 @@ app.use('/api/users', userRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/comments', commentRouter)
 app.use('/api/upload', uploadRouter)
+app.use('/', staticRouter)
 
 // Error handling middleware
 app.use(mongoErrorHandler)
