@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Request, Response } from 'express';
 import config from './config/config'
 import cookieParser from 'cookie-parser'
 import compression from 'compression'
@@ -33,16 +33,23 @@ app.use('/api/auth', authRouter)
 app.use('/api/comments', commentRouter)
 app.use('/api/upload', uploadRouter)
 app.use('/', staticRouter)
+app.get('/redirectGRL', (req: Request, res: Response) => {
+  res.redirect(302, 'https://www.grail.bz/');
+});
 
 // Error handling middleware
 app.use(mongoErrorHandler)
 app.use(errorHandler)
 
-app.listen(config.port, () => {
-  console.log(`Server is running on http://localhost:${config.port}/`)
-})
 
 mongoose.Promise = Promise
 mongoose.connect(config.mongoUrl)
+.then(() => {
+  console.log('MongoDB connected');
+  app.listen(config.port, () => {
+    console.log(`Server is running on port ${config.port}`);
+  });
+})
+
 mongoose.connection.syncIndexes()
 mongoose.connection.on('error', (error: Error) => console.log(error))
